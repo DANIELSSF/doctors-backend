@@ -1,34 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Query, Res, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Response, Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Get('google')
+  async googleAuth(@Res() res: Response) {
+    const url = await this.authService.getAuthUrl();
+    res.redirect(url);
   }
 
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
+  @Get('google/callback')
+  async googleCallback(@Query('code') code: string, @Res() res: Response) {
+    if (!code) {
+      return res.status(400).send('Authorization code not found');
+    }
+    const jwtToken = await this.authService.handleGoogleCallback(code);
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+    res.cookie('authGoogle', jwtToken, { httpOnly: true, secure: true });
+    res.redirect(`${process.env.FRONTEND_URL}/schedule`);
+    //en el forntend validar con el jwt ademas validar el token guardado en base de datos de google que este activo esto tanto para las rutas para los pagos como para hacer la peticion de la reserva en google calendar
   }
 }

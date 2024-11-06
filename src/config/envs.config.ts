@@ -21,7 +21,6 @@ if (error) throw new Error(`Config validation error: ${error.message}`);
 
 const envVars: EnvVars = value;
 
-console.log(envVars);
 
 export const envs = {
   port: envVars.PORT,
