@@ -3,6 +3,7 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { envs } from './config/envs.config';
+import { User } from './auth/entities/user.entity';
 
 @Module({
   imports: [
@@ -13,13 +14,14 @@ import { envs } from './config/envs.config';
       username: envs.db.username,
       password: envs.db.password,
       database: envs.db.name,
-      entities: [],
-      synchronize: true,
+      entities: [User],
+      synchronize: false,
       autoLoadEntities: true,
     }),
     AuthModule,
   ],
   controllers: [],
   providers: [],
+  exports: [TypeOrmModule]
 })
 export class AppModule {}
