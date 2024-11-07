@@ -37,7 +37,7 @@ export class AuthService {
     try {
       // 1. Get tokens from code
       const { tokens } = await this.oAuth2Client.getToken(code);
-      
+
       if (!tokens.access_token) {
         throw new Error('No access token received');
       }
@@ -71,6 +71,8 @@ export class AuthService {
         throw new Error('No email received from Google');
       }
 
+      console.log(JSON.stringify(userData, null, 2));
+
       // 5. Find or create user
       let user = await this.userRepository.findOne({
         where: { email: userData.email },
@@ -87,11 +89,13 @@ export class AuthService {
             token_type: tokens.token_type,
             expiry_date: tokens.expiry_date,
           },
+          picture: userData.picture,
         });
       } else {
         user.googleTokens = {
           access_token: tokens.access_token,
-          refresh_token: tokens.refresh_token || user.googleTokens?.refresh_token,
+          refresh_token:
+            tokens.refresh_token || user.googleTokens?.refresh_token,
           scope: tokens.scope,
           token_type: tokens.token_type,
           expiry_date: tokens.expiry_date,
@@ -108,9 +112,9 @@ export class AuthService {
           id: user.id,
           email: user.email,
           name: user.name,
+          picture: user.picture,
         },
       };
-
     } catch (error) {
       console.error('Error en handleGoogleCallback:', error);
       throw new Error(`Error al autenticar con Google: ${error.message}`);
