@@ -13,11 +13,10 @@ import { User } from './entities/user.entity';
       secret: authEnvs.jwtSecret,
       signOptions: { expiresIn: authEnvs.jwtExpiresIn },
     }),
-    TypeOrmModule.forFeature([
-      User,
-    ]),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}
