@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { envs } from './config/envs.config';
 import { User } from './auth/entities/user.entity';
+import { CalendarModule } from './calendar/calendar.module';
 import { PaymentModule } from './payments/payment.module';
 import { WebhookModule } from './webhook/webhook.module';
 import { Payment } from './payments/entities/payment.entity';
@@ -22,6 +23,7 @@ import { Payment } from './payments/entities/payment.entity';
       autoLoadEntities: true,
     }),
     AuthModule,
+    CalendarModule,
     PaymentModule,
     WebhookModule,
   ],
