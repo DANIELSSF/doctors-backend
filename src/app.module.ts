@@ -6,6 +6,7 @@ import { envs } from './config/envs.config';
 import { User } from './auth/entities/user.entity';
 import { PaymentModule } from './payments/payment.module';
 import { WebhookModule } from './webhook/webhook.module';
+import { Payment } from './payments/entities/payment.entity';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { WebhookModule } from './webhook/webhook.module';
       username: envs.db.username,
       password: envs.db.password,
       database: envs.db.name,
-      entities: [User],
+      entities: [User, Payment],
       synchronize: false,
       autoLoadEntities: true,
     }),
