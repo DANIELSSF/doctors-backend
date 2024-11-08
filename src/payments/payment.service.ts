@@ -45,13 +45,13 @@ export class PaymentService {
     return this.paymentRepository.save({
       ...createPayment,
       date: new Date(),
-      status: 'pending',
+      status: 'PENDING',
     });
   }
 
   async updatePaymentStatus(
     reference: string,
-    status: string,
+    status: 'APPROVED' | 'DECLINED' | 'VOIDED' | 'ERROR' | 'PENDING',
     payment_method: string,
   ) {
     const payment = await this.paymentRepository.findOne({
@@ -62,5 +62,11 @@ export class PaymentService {
       payment.payment_method = payment_method;
       await this.paymentRepository.save(payment);
     }
+  }
+
+  async getPaymentActive(user: User) {
+    return await this.paymentRepository.find({
+      where: { user, status: 'APPROVED', booking: null },
+    });
   }
 }

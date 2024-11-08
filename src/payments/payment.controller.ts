@@ -24,4 +24,10 @@ export class PaymentController {
     );
     return { signature };
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('payment-active')
+  async paymentActive(@GetUser() user: User) {
+    return this.paymentService.getPaymentActive(user);
+  }
 }
