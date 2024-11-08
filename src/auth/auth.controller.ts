@@ -19,6 +19,7 @@ export class AuthController {
     }
     const jwtToken = await this.authService.handleGoogleCallback(code);
 
+    console.log(jwtToken);
     res.cookie('authGoogle', JSON.stringify(jwtToken));
     res.redirect(`${process.env.FRONTEND_URL}/professional`);
     //en el forntend validar con el jwt ademas validar el token guardado en base de datos de google que este activo esto tanto para las rutas para los pagos como para hacer la peticion de la reserva en google calendar
