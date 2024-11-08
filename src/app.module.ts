@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { envs } from './config/envs.config';
 import { User } from './auth/entities/user.entity';
+import { CalendarModule } from './calendar/calendar.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { User } from './auth/entities/user.entity';
       autoLoadEntities: true,
     }),
     AuthModule,
+    CalendarModule,
   ],
   controllers: [],
   providers: [],
