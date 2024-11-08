@@ -1,11 +1,10 @@
 import { Type } from 'class-transformer';
-import { IsEmail, IsNumber } from 'class-validator';
+import { IsEmail, IsNumber, IsString } from 'class-validator';
 
 export class FreeBusyCalendarValidationDto {
   @IsEmail()
   emailTarget: string;
 
   @IsNumber()
-  @Type(() => Number)
   id: number;
 }

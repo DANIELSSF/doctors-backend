@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, HttpCode } from '@nestjs/common';
 import { CalendarService } from './calendar.service';
 import { FreeBusyCalendarValidationDto } from './dto/search-freebusy-calendar.dto';
 
@@ -7,7 +7,11 @@ export class CalendarController {
   constructor(private readonly calendarService: CalendarService) {}
 
   @Post('freebusy')
-  create(@Body() freeBusyCalendarValidationDto: FreeBusyCalendarValidationDto) {
+  @HttpCode(HttpStatus.OK)
+  generateFreeBusySchedule(
+    @Body() freeBusyCalendarValidationDto: FreeBusyCalendarValidationDto,
+    //  @GetUser() user: User
+  ) {
     return this.calendarService.getFreeBusy(freeBusyCalendarValidationDto);
   }
 }
