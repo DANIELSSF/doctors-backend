@@ -8,6 +8,7 @@ import { CalendarModule } from './calendar/calendar.module';
 import { PaymentModule } from './payments/payment.module';
 import { WebhookModule } from './webhook/webhook.module';
 import { Payment } from './payments/entities/payment.entity';
+import { Booking } from './calendar/entities/booking.entity';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { Payment } from './payments/entities/payment.entity';
       username: envs.db.username,
       password: envs.db.password,
       database: envs.db.name,
-      entities: [User, Payment],
+      entities: [User, Payment, Booking],
       synchronize: false,
       autoLoadEntities: true,
     }),
