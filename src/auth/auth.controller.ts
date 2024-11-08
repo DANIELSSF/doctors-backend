@@ -1,6 +1,9 @@
-import { Controller, Get, Query, Res } from '@nestjs/common';
+import { Controller, Get, Query, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { User } from './entities/user.entity';
+import { GetUser } from './decorators/get-user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -23,5 +26,14 @@ export class AuthController {
     res.cookie('authGoogle', JSON.stringify(jwtToken));
     res.redirect(`${process.env.FRONTEND_URL}/professional`);
     //en el forntend validar con el jwt ademas validar el token guardado en base de datos de google que este activo esto tanto para las rutas para los pagos como para hacer la peticion de la reserva en google calendar
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('validate-token')
+  async validateToken(@GetUser() user: User, @Res() res: Response) {
+    const jwtToken = await this.authService.validateToken(user);
+
+    res.cookie('authGoogle', JSON.stringify(jwtToken));
+    return res.status(200).send('Token is valid');
   }
 }

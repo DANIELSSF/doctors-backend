@@ -120,4 +120,17 @@ export class AuthService {
       throw new Error(`Error al autenticar con Google: ${error.message}`);
     }
   }
+
+  async validateToken(user: User) {
+    const payload = { userId: user.id, email: user.email };
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        picture: user.picture,
+      },
+    };
+  }
 }
