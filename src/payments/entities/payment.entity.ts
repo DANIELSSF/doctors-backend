@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 // Importa Booking cuando tengas su entidad definida
 // import { Booking } from './booking.entity';
+import { Booking } from '../../calendar/entities/booking.entity';
 
 @Entity('payments')
 export class Payment {
@@ -22,16 +23,22 @@ export class Payment {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  // Booking puede ser opcional en el momento de crear el pago, así que lo hacemos nullable
-  @Column({ type: 'bigint', nullable: true })
-  booking_id: number; // Relación pendiente de definir cuando se tenga la entidad Booking
+  @ManyToOne(() => Booking, (booking) => booking.id, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'booking_id' })
+  booking: Booking;
 
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   amount: number;
 
-  //status text NOT NULL
-  @Column({ type: 'text', nullable: false })
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: ['APPROVED', 'DECLINED', 'VOIDED', 'ERROR', 'PENDING'],
+    nullable: false,
+  })
+  status: 'APPROVED' | 'DECLINED' | 'VOIDED' | 'ERROR' | 'PENDING';
 
   @Column({ type: 'text', nullable: false })
   reference: string;
