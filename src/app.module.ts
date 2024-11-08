@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { envs } from './config/envs.config';
 import { User } from './auth/entities/user.entity';
 import { CalendarModule } from './calendar/calendar.module';
+import { PaymentModule } from './payments/payment.module';
+import { WebhookModule } from './webhook/webhook.module';
 
 @Module({
   imports: [
@@ -21,9 +23,11 @@ import { CalendarModule } from './calendar/calendar.module';
     }),
     AuthModule,
     CalendarModule,
+    PaymentModule,
+    WebhookModule,
   ],
   controllers: [],
   providers: [],
-  exports: [TypeOrmModule]
+  exports: [TypeOrmModule],
 })
 export class AppModule {}

@@ -11,7 +11,7 @@ export class User {
   @Column({ nullable: true })
   name: string;
 
-  @Column({name: 'google_tokens',type:'jsonb' ,nullable: true })
+  @Column({ name: 'google_tokens', type: 'jsonb', nullable: true })
   googleTokens: {
     access_token: string;
     refresh_token?: string;
@@ -19,4 +19,7 @@ export class User {
     token_type: string;
     expiry_date: number;
   };
+
+  @Column()
+  picture: string;
 }

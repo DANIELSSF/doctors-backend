@@ -12,6 +12,8 @@ const envsSchema = joi
     DB_HOST: joi.string().required(),
     DB_PORT: joi.number().required(),
     DB_USERNAME: joi.string().required(),
+
+    WOMPI_INTEGRITY_SECRET: joi.string().required(),
   })
   .unknown(true);
 
@@ -21,7 +23,6 @@ if (error) throw new Error(`Config validation error: ${error.message}`);
 
 const envVars: EnvVars = value;
 
-
 export const envs = {
   port: envVars.PORT,
   db: {
@@ -30,5 +31,8 @@ export const envs = {
     host: envVars.DB_HOST,
     port: envVars.DB_PORT,
     username: envVars.DB_USERNAME,
+  },
+  wompi: {
+    integritySecret: envVars.WOMPI_INTEGRITY_SECRET,
   },
 };

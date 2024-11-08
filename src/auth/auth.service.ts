@@ -1,3 +1,4 @@
+
 import { Injectable } from '@nestjs/common';
 import { google } from 'googleapis';
 import { JwtService } from '@nestjs/jwt';
@@ -71,6 +72,8 @@ export class AuthService {
         throw new Error('No email received from Google');
       }
 
+      console.log(JSON.stringify(userData, null, 2));
+
       // 5. Find or create user
       let user = await this.userRepository.findOne({
         where: { email: userData.email },
@@ -87,6 +90,7 @@ export class AuthService {
             token_type: tokens.token_type,
             expiry_date: tokens.expiry_date,
           },
+          picture: userData.picture,
         });
       } else {
         user.googleTokens = {
@@ -109,6 +113,7 @@ export class AuthService {
           id: user.id,
           email: user.email,
           name: user.name,
+          picture: user.picture,
         },
       };
     } catch (error) {
