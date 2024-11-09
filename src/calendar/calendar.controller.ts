@@ -8,10 +8,12 @@ import {
   InternalServerErrorException,
   Get,
 } from '@nestjs/common';
+
 import { CalendarService } from './calendar.service';
 import { FreeBusyCalendarValidationDto } from './dto/search-freebusy-calendar.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { GoogleCredentialAuth } from 'src/auth/guards/google-token.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from 'src/auth/entities/user.entity';
 import { EventDataDto } from './dto/create-event-data.dto';
 
@@ -19,15 +21,15 @@ import { EventDataDto } from './dto/create-event-data.dto';
 export class CalendarController {
   constructor(private readonly calendarService: CalendarService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, GoogleCredentialAuth)
   @Post('freebusy')
   @HttpCode(HttpStatus.OK)
   generateFreeBusySchedule(
     @Body() freeBusyCalendarValidationDto: FreeBusyCalendarValidationDto,
     @GetUser() user: User,
   ) {
-    const { emailTarget } = freeBusyCalendarValidationDto;
-    return this.calendarService.getFreeBusy({ emailTarget, user });
+    const { targetEmail } = freeBusyCalendarValidationDto;
+    return this.calendarService.getFreeBusy({ targetEmail, user });
   }
 
   @UseGuards(JwtAuthGuard)

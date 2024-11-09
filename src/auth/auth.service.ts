@@ -65,13 +65,10 @@ export class AuthService {
       });
 
       const userData = userInfoResponse.data;
-      console.log('userData:', userData);
 
       if (!userData.email) {
         throw new Error('No email received from Google');
       }
-
-      console.log(JSON.stringify(userData, null, 2));
 
       // 5. Find or create user
       let user = await this.userRepository.findOne({

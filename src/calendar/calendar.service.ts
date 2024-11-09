@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { calendar_v3, google } from 'googleapis';
+import { google } from 'googleapis';
 
 import { User } from 'src/auth/entities/user.entity';
 import { GoogleCredentials } from './interfaces';
@@ -21,18 +22,18 @@ export class CalendarService {
   ) {}
 
   async getFreeBusy(freeBusyCalendarValidationDto: {
-    emailTarget: string;
+    targetEmail: string;
     user: User;
   }) {
-    const { emailTarget, user } = freeBusyCalendarValidationDto;
+    const { targetEmail, user } = freeBusyCalendarValidationDto;
     const { googleTokens } = user;
 
     if (!googleTokens) {
       throw new BadRequestException('Google tokens not found for user');
     }
 
-    this.logger.log(`Fetching busy calendar for: ${emailTarget}`);
-    return this.getBusyCalendar(googleTokens, emailTarget);
+    this.logger.log(`Fetching busy calendar for: ${targetEmail}`);
+    return this.getBusyCalendar(googleTokens, targetEmail);
   }
 
   async createEvent(createEventDataDto: CreateEventDataDto) {
@@ -87,7 +88,7 @@ export class CalendarService {
 
   private async getBusyCalendar(
     googleCredentials: GoogleCredentials,
-    emailTarget: string,
+    targetEmail: string,
   ) {
     const oAuth2Client = new google.auth.OAuth2();
     oAuth2Client.setCredentials(googleCredentials);
@@ -99,28 +100,26 @@ export class CalendarService {
       timeMax: new Date(
         new Date().setDate(new Date().getDate() + 7),
       ).toISOString(),
-      items: [{ id: emailTarget }],
+      items: [{ id: targetEmail }],
     };
 
     try {
-      console.log('FreeBusy request:', freeBusyRequest);
       const response = await calendar.freebusy.query({
         requestBody: freeBusyRequest,
       });
 
       this.logger.log(
-        `FreeBusy response for ${emailTarget}: ${JSON.stringify(response.data.calendars)}`,
+        `FreeBusy response for ${targetEmail}: ${JSON.stringify(response.data.calendars)}`,
       );
 
-      const busyTimes = response.data.calendars?.[emailTarget]?.busy || [];
+      const busyTimes = response.data.calendars?.[targetEmail]?.busy || [];
       this.logger.log(
-        `Busy times for ${emailTarget}: ${JSON.stringify(busyTimes)}`,
+        `Busy times for ${targetEmail}: ${JSON.stringify(busyTimes)}`,
       );
 
       return { busyTimes };
     } catch (error) {
-      console.log(error.message);
-      // this.logger.error(error.message);
+      this.logger.error(error.message);
       throw new BadRequestException('Error in FreeBusy query');
     }
   }
