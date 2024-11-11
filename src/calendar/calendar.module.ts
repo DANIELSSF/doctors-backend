@@ -7,10 +7,9 @@ import { Booking } from './entities/booking.entity';
 import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [PaymentModule, TypeOrmModule.forFeature([Booking])],
+  imports: [PaymentModule, TypeOrmModule.forFeature([Booking]), AuthModule],
   controllers: [CalendarController],
   providers: [CalendarService],
   exports: [CalendarService, TypeOrmModule],
-  imports: [AuthModule],
 })
 export class CalendarModule {}

@@ -25,14 +25,15 @@ export class PaymentService {
     try {
       const data = `${reference}${amountInCents}${currency}${this.integritySecret}`;
       const hash = crypto.createHash('sha256').update(data).digest('hex');
+      console.log(user),
+        await this.createPayment({
+          user_id: user,
+          amount: amountInCents / 100, // Change (COP) cents to pesos
+          payment_method: 'Wompi',
+          reference: reference,
+        });
 
-      await this.createPayment({
-        user_id: user.id,
-        amount: amountInCents / 100, // Change (COP) cents to pesos
-        payment_method: 'Wompi',
-        reference: reference,
-      });
-
+      console.log(hash);
       return hash;
     } catch (error) {
       throw new InternalServerErrorException(

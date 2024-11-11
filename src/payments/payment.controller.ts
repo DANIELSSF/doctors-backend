@@ -10,13 +10,13 @@ export class PaymentController {
 
   @UseGuards(JwtAuthGuard)
   @Get('generate-signature')
-  generateSignature(
+  async generateSignature(
     @Query('reference') reference: string,
     @Query('amountInCents') amountInCents: number,
     @Query('currency') currency: string,
     @GetUser() user: User,
   ) {
-    const signature = this.paymentService.generateIntegritySignature(
+    const signature = await this.paymentService.generateIntegritySignature(
       reference,
       amountInCents,
       currency,

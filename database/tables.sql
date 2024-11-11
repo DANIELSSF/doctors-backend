@@ -25,7 +25,8 @@ CREATE TABLE payments (
   user_id bigint REFERENCES users (id),
   booking_id bigint REFERENCES bookings (id),
   amount numeric(10, 2) NOT NULL,
-  status text NOT NULL date timestamp NOT NULL,
+  status text NOT NULL, 
+  date timestamp NOT NULL,
   reference text NOT NULL,
   payment_method text NOT NULL
 );

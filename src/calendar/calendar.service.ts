@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { calendar_v3, google } from 'googleapis';
-import { google } from 'googleapis';
 
 import { User } from 'src/auth/entities/user.entity';
 import { GoogleCredentials } from './interfaces';

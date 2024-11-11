@@ -6,7 +6,6 @@ import {
   HttpCode,
   UseGuards,
   InternalServerErrorException,
-  Get,
 } from '@nestjs/common';
 
 import { CalendarService } from './calendar.service';

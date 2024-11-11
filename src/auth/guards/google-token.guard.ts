@@ -35,12 +35,18 @@ export class GoogleCredentialAuth implements CanActivate {
       where: { id: payload.id },
     });
 
+    if (!user) {
+      response.clearCookie('authGoogle');
+      throw new UnauthorizedException('Invalid token');
+    }
+
     if (!user?.googleTokens) {
       response.clearCookie('authGoogle');
       throw new UnauthorizedException('Invalid token');
     }
 
     const isExpired = Date.now() >= user.googleTokens.expiry_date;
+    console.log(isExpired);
 
     if (isExpired) {
       this.logger.debug('Token expired. Attempting to refresh...');
