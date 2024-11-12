@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Payment } from 'src/payments/entities/payment.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -22,4 +23,7 @@ export class User {
 
   @Column()
   picture: string;
+
+  @OneToMany(() => Payment, (payment) => payment.user)
+  payments: Payment[];
 }
