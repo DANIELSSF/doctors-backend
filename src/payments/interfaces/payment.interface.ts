@@ -1,7 +1,5 @@
-import { User } from 'src/auth/entities/user.entity';
-
 export interface CreatePaymentData {
-  user_id: User;
+  user_id: number;
   amount: number;
   payment_method: string;
   reference: string;
