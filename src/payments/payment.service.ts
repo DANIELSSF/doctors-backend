@@ -27,7 +27,7 @@ export class PaymentService {
       const hash = crypto.createHash('sha256').update(data).digest('hex');
       console.log(user),
         await this.createPayment({
-          user_id: user,
+          user_id: user.id,
           amount: amountInCents / 100, // Change (COP) cents to pesos
           payment_method: 'Wompi',
           reference: reference,
@@ -42,11 +42,12 @@ export class PaymentService {
     }
   }
 
-  createPayment(createPayment: CreatePaymentData) {
-    return this.paymentRepository.save({
+  async createPayment(createPayment: CreatePaymentData) {
+    return await this.paymentRepository.save({
       ...createPayment,
       date: new Date(),
       status: 'PENDING',
+      user: { id: createPayment.user_id },
     });
   }
 
