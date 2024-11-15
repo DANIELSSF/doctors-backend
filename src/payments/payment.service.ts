@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as crypto from 'crypto';
 import { envs } from 'src/config/envs.config';
 import { Payment } from './entities/payment.entity';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { CreatePaymentData } from './interfaces/payment.interface';
 import { User } from 'src/auth/entities/user.entity';
 
@@ -25,15 +25,13 @@ export class PaymentService {
     try {
       const data = `${reference}${amountInCents}${currency}${this.integritySecret}`;
       const hash = crypto.createHash('sha256').update(data).digest('hex');
-      console.log(user),
-        await this.createPayment({
-          user_id: user.id,
-          amount: amountInCents / 100, // Change (COP) cents to pesos
-          payment_method: 'Wompi',
-          reference: reference,
-        });
+      await this.createPayment({
+        user_id: user.id,
+        amount: amountInCents / 100, // Change (COP) cents to pesos
+        payment_method: 'Wompi',
+        reference: reference,
+      });
 
-      console.log(hash);
       return hash;
     } catch (error) {
       throw new InternalServerErrorException(
@@ -68,7 +66,7 @@ export class PaymentService {
 
   async getPaymentActive(user: User) {
     return await this.paymentRepository.find({
-      where: { user, status: 'APPROVED', booking: null },
+      where: { user, status: 'APPROVED', booking: IsNull() },
     });
   }
 }

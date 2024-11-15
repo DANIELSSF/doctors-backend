@@ -24,11 +24,13 @@ export class Payment {
   user: User;
 
   @ManyToOne(() => Booking, (booking) => booking.id, {
-    nullable: false,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'booking_id' })
   booking: Booking;
+
+  @Column({ type: 'bigint', name: 'booking_id' })
+  bookingId: number | null;
 
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   amount: number;

@@ -6,7 +6,7 @@ import { GoogleCredentials } from './interfaces';
 import { CreateEventDataDto } from './dto/create-event-data.dto';
 import { Payment } from 'src/payments/entities/payment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { Booking } from './entities/booking.entity';
 
 @Injectable()
@@ -42,8 +42,9 @@ export class CalendarService {
 
     //validate if has a payment with id_booking in null and status approved
     const payment = await this.paymentRepository.findOne({
-      where: { booking: null, status: 'APPROVED', user },
+      where: { bookingId: IsNull(), status: 'APPROVED', user },
     });
+    console.log(payment);
 
     if (!payment) {
       throw new BadRequestException('No approved payment found');
@@ -75,10 +76,10 @@ export class CalendarService {
         status: 'PENDING',
       });
       payment.booking = booking;
-      await this.paymentRepository.save(payment);
       await this.BookingRepository.save(booking);
+      await this.paymentRepository.save(payment);
 
-      return response.data;
+      return { msg: response.data.status };
     } catch (error) {
       this.logger.error(`Error creating event: ${error.message}`);
       throw new BadRequestException('Error creating calendar event');

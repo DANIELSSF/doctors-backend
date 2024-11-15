@@ -5,7 +5,7 @@ export class Booking {
   @PrimaryGeneratedColumn('increment', { type: 'bigint' })
   id: number;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({ type: 'text', nullable: false, name: 'professional_email' })
   professionalEmail: string;
 
   @Column({ type: 'timestamp', nullable: false })
