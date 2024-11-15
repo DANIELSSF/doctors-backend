@@ -46,7 +46,6 @@ export class GoogleCredentialAuth implements CanActivate {
     }
 
     const isExpired = Date.now() >= user.googleTokens.expiry_date;
-    console.log(isExpired);
 
     if (isExpired) {
       this.logger.debug('Token expired. Attempting to refresh...');
