@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Payment } from 'src/payments/entities/payment.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -11,7 +12,7 @@ export class User {
   @Column({ nullable: true })
   name: string;
 
-  @Column({name: 'google_tokens',type:'jsonb' ,nullable: true })
+  @Column({ name: 'google_tokens', type: 'jsonb', nullable: true })
   googleTokens: {
     access_token: string;
     refresh_token?: string;
@@ -19,4 +20,10 @@ export class User {
     token_type: string;
     expiry_date: number;
   };
+
+  @Column()
+  picture: string;
+
+  @OneToMany(() => Payment, (payment) => payment.user)
+  payments: Payment[];
 }

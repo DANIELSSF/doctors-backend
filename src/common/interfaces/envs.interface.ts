@@ -8,4 +8,7 @@ export interface EnvVars {
   DB_HOST: string;
   DB_PORT: number;
   DB_USERNAME: string;
+
+  //Wompi
+  WOMPI_INTEGRITY_SECRET: string;
 }
