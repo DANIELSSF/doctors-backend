@@ -9,7 +9,7 @@
 
   This project is a backend application for managing doctors, built using the NestJS framework. It provides APIs for creating, updating, and retrieving doctor information.
 
-  ## 1. Installation
+  ## Installation
 
   ```bash
   $ yarn install
@@ -22,7 +22,7 @@
   [Docker Official Website](https://www.docker.com/)
 
   ### 2. Run the database 
-  Once Docker is installed, navigate to the project directory and execute the following command:  
+  Once Docker is installed, navigate to the project directory and execute the following command (cmd, powershell):  
   ```bash
   docker-compose up -d
   ```
