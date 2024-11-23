@@ -21,6 +21,8 @@
   First, you need to install Docker. You can download and install it from the following link:  
   [Docker Official Website](https://www.docker.com/)
 
+  **Note:** You need remane the file .env.template to .env and use this credentials and add the wompi credentials and google credentials
+  
   ### 2. Run the database 
   Once Docker is installed, navigate to the project directory and execute the following command (cmd, powershell):  
   ```bash
@@ -34,8 +36,6 @@
   You need to execute these queries using a `PostgreSQL` console or a database management tool like `TablePlus`.
 
   The database credentials (username, password, etc.) are located in the `.env` file in the project directory. Make sure to use these credentials to connect to the database.
-
-  **Note:** You need remane the file .env.template to .env and use this credentials and add the wompi credentials and google credentials
 
   ## Running the app
 
