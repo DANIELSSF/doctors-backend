@@ -1,54 +1,96 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-  </p>
+# Doctor Management Backend 🩺
 
-  [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-  [circleci-url]: https://circleci.com/gh/nestjs/nest
+A robust backend application for managing doctors, built with NestJS framework. This system provides comprehensive APIs for doctor information management.
 
-  ## Description
+## 📋 Table of Contents
 
-  This project is a backend application for managing doctors, built using the NestJS framework. It provides APIs for creating, updating, and retrieving doctor information.
+- [Description](#description)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Environment Configuration](#environment-configuration)
+- [Database Setup](#database-setup)
+- [Running the Application](#running-the-application)
+- [License](#license)
 
-  ## Installation
+## 🎯 Description
 
-  ```bash
-  $ yarn install
-  ```
+This project serves as a backend application for managing doctors' information. Built using the powerful NestJS framework, it offers a full suite of APIs for creating, updating, and retrieving doctor information with high performance and scalability.
 
- # Project Setup Instructions
+## 🔧 Prerequisites
 
-  ### 1. Install Docker  
-  First, you need to install Docker. You can download and install it from the following link:  
-  [Docker Official Website](https://www.docker.com/)
+Before you begin, ensure you have the following installed:
+- Node.js (Latest LTS version)
+- Yarn package manager
+- Docker and Docker Compose
+- PostgreSQL client (optional, for database management)
 
-  **Note:** You need remane the file .env.template to .env and use this credentials and add the wompi credentials and google credentials
-  
-  ### 2. Run the database 
-  Once Docker is installed, navigate to the project directory and execute the following command (cmd, powershell):  
-  ```bash
-  docker-compose up -d
-  ```
-  This process will set up and run the database using PostgreSQL.
+## 🚀 Installation
 
-  ### 3. Insert the Database Structure
-  After the database is running, navigate to the `database` folder inside the project directory. Inside, you’ll find a file named `tables.sql`. This file contains the necessary SQL        queries to set up the database structure.
+1. Clone the repository:
+```bash
+git clone https://github.com/DANIELSSF/doctors-backend.git
+```
 
-  You need to execute these queries using a `PostgreSQL` console or a database management tool like `TablePlus`.
+2. Navigate to project directory:
+```bash
+cd doctors-backend
+```
 
-  The database credentials (username, password, etc.) are located in the `.env` file in the project directory. Make sure to use these credentials to connect to the database.
+3. Install dependencies:
+```bash
+yarn install
+```
 
-  ## Running the app
+## ⚙️ Environment Configuration
 
-  ```bash
-  # development
-  $ yarn run start
+1. Rename `.env.template` to `.env`
+2. Configure the following in your `.env` file:
+   - Database credentials
+   - Wompi credentials
+   - Google credentials
 
-  # watch mode
-  $ yarn run start:dev
+## 💾 Database Setup
 
-  # production mode
-  $ yarn run start:prod
-  ```
-  ## License
+### 1. Installing Docker
 
-  Nest is [MIT licensed](LICENSE).
+Download and install Docker from the [Official Docker Website](https://www.docker.com/)
+
+### 2. Starting the Database
+
+After configuring your .env file, run the following command in your terminal to start the PostgreSQL database:
+```bash
+docker-compose up -d
+```
+
+### 3. Database Structure Setup
+
+1. Navigate to the `database` folder in the project directory
+2. Locate the `tables.sql` file
+3. Execute the SQL queries using either:
+   - PostgreSQL console
+   - Database management tool (e.g., TablePlus)
+
+## 🏃‍♂️ Running the Application
+
+Choose one of the following modes to run the application:
+
+```bash
+# Development mode
+yarn run start
+
+# Watch mode (auto-reload)
+yarn run start:dev
+
+# Production mode
+yarn run start:prod
+```
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ using NestJS</sub>
+</div>
